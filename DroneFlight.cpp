@@ -6,16 +6,12 @@
 #include <fstream>
 #include <deque>
 #include "drone/drone.h"
-//#include "ATen/ATen.h"
+#include "policy/policy.h"
 
 
 
 int main()
 {
-  /*  at::Tensor a = at::ones({ 2, 2 }, at::kInt);
-    at::Tensor b = at::randn({ 2, 2 });
-    auto c = a + b.to(at::kInt);*/
-
     // Open a CSV file for writing
     std::ofstream csvFile("data.csv");
     Drone drone(2.0, 0.6, 0.6);

@@ -23,5 +23,8 @@
     <ClInclude Include="drone\drone.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="policy\policy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

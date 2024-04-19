@@ -151,10 +151,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DroneFlight.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="model\linear.cpp" />
+    <ClCompile Include="model\model.cpp" />
+    <ClCompile Include="model\relu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="drone\drone.h" />
+    <ClInclude Include="model\linear.h" />
+    <ClInclude Include="model\relu.h" />
     <ClInclude Include="policy\policy.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

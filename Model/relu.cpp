@@ -1,23 +1,30 @@
 
-#include 'relu.h'
+#include "relu.h"
+#include <cmath>
 
-class Relu {
+Relu::Relu(std::vector<int> input_shape, std::vector<std::vector<float>> inputData) : input_shape(input_shape), inputData(inputData) {}
 
-	Relu(int input_shape, std::vector<float> input) : input_shape(input_shape), input(z) {}
 
-	std::vector<float> compute() {
-		std::vector<float> tempA;
+// Function to get the maximum between two numbers
+float Relu::max(double a, double b) {
+    // Return the maximum of the two numbers
+    if (a > b) {
+        return a;
+    }
+    else {
+        return b;
+    }
+}
+std::vector<std::vector<float>> Relu::compute() {
+    std::vector<std::vector<float>> result(inputData.size(), std::vector<float>(inputData[0].size(), 0.0));
 
-		for (int im = 0; im < input_shape; im++) {
-			float max_value;
-			auto max_iter = std::max_element(z.begin(), z.end(), 0);
-			if (max_iter < z.end()) {
-				max_value = *max_iter;
-			}
-			tempA.push_back(max_value);
-		}
+    // Apply ReLU to each element of the matrix
+    for (size_t i = 0; i < inputData.size(); i++) {
+        for (size_t j = 0; j < inputData[i].size(); j++) {
+            result[i][j] = max(0.0, inputData[i][j]);
+        }
+    }
 
-		return tempA;
-	}
+    return result;
+}
 		
-};

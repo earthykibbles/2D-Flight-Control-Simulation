@@ -1,11 +1,14 @@
-
-
+#pragma once
+#include <iostream>
+#include <vector>
 
 class Relu {
 public:
-	std::vector<float> z;
+	std::vector<std::vector<float>> inputData;
+	std::vector<int> input_shape;
 
-	Relu(int input_shape, std::vector<float> input);
+	Relu(std::vector<int> input_shape, std::vector<std::vector<float>> inputData);
 
-	std::vector<float> compute();
+	float max(double a, double b);
+	std::vector<std::vector<float>> compute();
 };

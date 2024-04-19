@@ -7,6 +7,7 @@
 #include <deque>
 #include "drone/drone.h"
 #include "policy/policy.h"
+#include "model/linear.h"
 
 
 

@@ -7,7 +7,7 @@
 #include <deque>
 #include "drone/drone.h"
 #include "policy/policy.h"
-#include "model/linear.h"
+#include "model/model.h"
 
 
 
@@ -15,7 +15,7 @@ int main()
 {
     // Open a CSV file for writing
     std::ofstream csvFile("data.csv");
-    Drone drone(2.0, 0.6, 0.6);
+    Drone drone(3.0, 0.6, 0.6);
     float delta_t = 0;
 
     // Check if the file opened successfully
@@ -23,7 +23,8 @@ int main()
         std::cerr << "Failed to open file." << std::endl;
         return 1;
     }
-    csvFile << "X,Y,V_X,V_Y,A_X,A_Y,Theta,Tau,Thrust" << std::endl;
+
+    csvFile << "Time,X,Y,V_X,V_Y,A_X,A_Y,Theta,Tau,Thrust" << std::endl;
 
 
     float epsilon = 0.6;
@@ -50,7 +51,10 @@ int main()
 
             //std::cout << std::fixed << std::setprecision(2) <<drone.v_x << "\t" << drone.v_y << "\t" << drone.a_x <<"\t" << drone.a_y << "\t" << drone.theta << "\t" << drone.tau << "\t" << drone.thrust << "\n";
             // Write the data to the CSV file with precision set to 2 decimal places
-            csvFile << std::fixed << std::setprecision(2)
+            csvFile 
+                << std::fixed 
+                << std::setprecision(2)
+                << delta_t << ","
                 << drone.x << ","
                 << drone.y << ","
                 << drone.v_x << ","
@@ -69,20 +73,28 @@ int main()
 
             delta_t += 0.1;
             epsilon -= 0.01;
-
-
-            // Our aim is to build a control system by q-learning 
-            // that will help the drone capture the flag by controlling the angular velocity of each rotor
-            //
         }
     }
 
     // Close the file
     csvFile.close();
-
-    // Inform the user that the data was written successfully
     std::cout << "Data written to data.csv successfully." << std::endl;
 
-    std::cout << "Hello World!\n";
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(0, 1);
+
+    std::vector<std::vector<float>> randomData;
+    for (int i = 0; i < 10; ++i) {
+        std::vector<float> rDph;
+        for (int j = 0; j < 10; ++j) {
+            rDph.push_back(dis(gen));
+        }
+        randomData.push_back(rDph);
+    }
+
+    Model model({32,10});
+    model.forward(randomData);
 }
 

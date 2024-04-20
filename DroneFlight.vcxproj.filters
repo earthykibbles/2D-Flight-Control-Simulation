@@ -21,7 +21,7 @@
     <ClCompile Include="model\linear.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="model\model.cpp">
+    <ClCompile Include="model\model.h">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="model\relu.cpp">

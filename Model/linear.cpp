@@ -31,7 +31,7 @@ std::vector<std::vector<float>> Linear::generateWeights() {
 std::vector<float> Linear::generateBias() {
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_real_distribution<float> dis(0, 1);
+	std::uniform_real_distribution<float> dis(0, 0.2);
 
 	std::vector<float> bias_temp;
 
@@ -47,6 +47,7 @@ std::vector<int> Linear::getOutputShape() {
 };
 
 std::vector<std::vector<float>>  Linear::compute(std::vector<std::vector<float>> &inputData) {
+	this->inputData = inputData;
 	float rowsA = inputData.size(); // Number of rows in matrixA
 	float colsA = inputData[0].size(); // Number of columns in matrixA
 	float rowsB = weights.size(); // Number of rows in matrixB
@@ -58,21 +59,19 @@ std::vector<std::vector<float>>  Linear::compute(std::vector<std::vector<float>>
 		return {};
 	}
 
-	std::vector<std::vector<float>> result(rowsA, std::vector<float>(colsB, 0.0));
+	std::vector<std::vector<float>> result(inputData.size(), std:: vector<float>(weights[0].size(), 0.0));
 
-
-	for (int r = 0; r < rowsA; r++) {
-		std::vector<float> temp_comp;
-		for (int c = 0; c < colsB; c++) {
-			float summation = 0;
-			for (size_t k = 0; k < colsA; k++) {
-				summation+= (inputData[r][k] * weights[k][c]) + bias[k];
+	// Perform matrix multiplication
+	for (size_t i = 0; i < inputData.size(); ++i) {
+		for (size_t j = 0; j < weights[0].size(); ++j) {
+			for (size_t k = 0; k < weights.size(); ++k) {
+				result[i][j] += inputData[i][k] * weights[k][j];
 			}
-			temp_comp.push_back(summation);
 		}
-		result.push_back(temp_comp);
 	}
-	std::cout << "success" << std::endl;
+
+	weights = generateWeights();
+	
 	return result;
 }
 

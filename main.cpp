@@ -27,7 +27,11 @@ int main()
     csvFile << "Time,X,Y,V_X,V_Y,A_X,A_Y,Theta,Tau,Thrust" << std::endl;
 
 
-    float epsilon = 0.6;
+    float epsilon = 0.9;
+
+    Model model({10,10});
+    std::vector<std::vector<float>> memory(0);
+    
     for (int episodes = 0; episodes < 100; episodes++) {
         while (delta_t < 2000) {
             std::random_device rd;
@@ -43,8 +47,19 @@ int main()
                 r2_ang_vel = dist(gen);
             }
             else {
-                r1_ang_vel = 120;
-                r2_ang_vel = 120;
+                if (memory.size() < 20) {
+                    std::vector<std::vector<float>> mem_feed(memory.begin(), memory.begin() + 9);
+                    std::cout << mem_feed.size() << std::endl;
+                    /* std::cout << model.predict(mem_feed)[0] << model.predict(mem_feed)[1]<< std::endl;
+                     r1_ang_vel = model.predict(mem_feed)[0];
+                     r2_ang_vel = model.predict(mem_feed)[1];
+                     mem_feed.clear();
+                 }*/
+                }
+                else {
+                    r1_ang_vel = dist(gen);
+                    r2_ang_vel = dist(gen);
+                }
             }
 
             drone.flightControl(r1_ang_vel, r2_ang_vel);
@@ -66,35 +81,20 @@ int main()
                 << drone.thrust << ","
                 << std::endl;
 
+            std::vector<float> state = { delta_t , drone.x , drone.y, drone.v_x, drone.v_y, drone.a_x, drone.a_y, drone.theta, drone.tau , drone.thrust };
+            memory.push_back(state);
+
             if (drone.y <= 0) {
                 break;
             }
 
-
             delta_t += 0.1;
-            epsilon -= 0.01;
+            epsilon -= 0.001;
         }
     }
 
     // Close the file
     csvFile.close();
     std::cout << "Data written to data.csv successfully." << std::endl;
-
-
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(0, 1);
-
-    std::vector<std::vector<float>> randomData;
-    for (int i = 0; i < 10; ++i) {
-        std::vector<float> rDph;
-        for (int j = 0; j < 10; ++j) {
-            rDph.push_back(dis(gen));
-        }
-        randomData.push_back(rDph);
-    }
-
-    Model model({32,10});
-    model.forward(randomData);
 }
 

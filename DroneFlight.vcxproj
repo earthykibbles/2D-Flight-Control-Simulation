@@ -155,11 +155,13 @@
     <ClCompile Include="model\linear.cpp" />
     <ClCompile Include="model\model.h" />
     <ClCompile Include="model\relu.cpp" />
+    <ClCompile Include="model\sigmoid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="drone\drone.h" />
     <ClInclude Include="model\linear.h" />
     <ClInclude Include="model\relu.h" />
+    <ClInclude Include="model\sigmoid.h" />
     <ClInclude Include="policy\policy.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

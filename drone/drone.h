@@ -43,31 +43,30 @@ public:
 
 	float d_cm;
 
-	std::tuple<float, float> initialPosition;
-	std::tuple<float, float> currentPosition;
-	std::tuple<float, float> targetPosition;
+	std::vector<float> bounds;
+	std::vector<float> initialPosition;
+	std::vector<float>  currentPosition;
 
 	//Drone has two rotors
 	Rotor r1;
 	Rotor r2;
 
 
-	Drone(float mass, float height, float width): mass(mass), height(height), width(width), r1(0.01, width/2), r2(0.01, width / 2) {
+	Drone(float mass, float height, float width, std::vector<float> bounds): mass(mass), height(height), width(width), r1(0.01, width/2), r2(0.01, width / 2), bounds(bounds) {
 		pickInitialPosition();
-		moi = mass* (pow(width, 2) + pow(height, 2))*0.0833;
+		moi = mass* (pow(width, 2) + pow(height, 2)) * 0.0833;
 		d_cm = width / 2;
 	};
 
 	void pickInitialPosition() {
 		std::random_device rd;
 		std::mt19937 gen(rd());
-		std::uniform_real_distribution<float> dis(0, 10);
-		x = dis(gen);
-		y = dis(gen);
+		std::uniform_real_distribution<float> disx(bounds[0], bounds[1]);
+		std::uniform_real_distribution<float> disy(bounds[2], bounds[3]);
+		x = disx(gen);
+		y = disy(gen);
 		initialPosition = {x,y};
-		targetPosition = { dis(gen), dis(gen) };
 	}
-
 
 	// What I can control is rotor speed to make it go up and down
 	void flightControl(float r1ang_val, float r2ang_val) {

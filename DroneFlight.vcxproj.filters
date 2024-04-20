@@ -35,7 +35,7 @@
     <ClInclude Include="drone\drone.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="policy\policy.h">
+    <ClInclude Include="environment\environment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="model\linear.h">

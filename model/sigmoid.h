@@ -13,4 +13,5 @@ public:
 	float max(double a, double b);
 	std::vector<int> getOutputShape();
 	std::vector<std::vector<float>> compute(std::vector<std::vector<float>>& inputData);
+	std::vector<std::vector<float>> computeDerivative(std::vector<std::vector<float>>& data);
 };

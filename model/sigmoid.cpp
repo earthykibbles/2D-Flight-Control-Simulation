@@ -32,3 +32,16 @@ std::vector<std::vector<float>> Sigmoid::compute(std::vector<std::vector<float>>
     }
     return result;
 }
+
+std::vector<std::vector<float>> Sigmoid::computeDerivative(std::vector<std::vector<float>>& data) {
+    std::vector<std::vector<float>> result;;
+
+    for (int r = 0; r < data.size(); r++) {
+        std::vector<float> temp_result;
+        for (int c = 0; c < data[0].size(); c++) {
+            temp_result.push_back((1 / (1 + exp(-(data[r][c])))) * (1 - (1 / (1 + exp(-(data[r][c]))))));
+        }
+        result.push_back(temp_result);
+    }
+    return result;
+}

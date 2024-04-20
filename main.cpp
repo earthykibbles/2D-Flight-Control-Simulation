@@ -63,6 +63,7 @@ int main()
 
             // This is both the reward and the loss of the neural network
             float reward = env.reward(drone);
+            model.backward(reward);
 
             std::cout << env.targetPosition[0] << "\t" << drone.x << "\t" << env.targetPosition[1] <<"\t" << drone.y << std::endl;
            

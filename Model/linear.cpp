@@ -70,8 +70,6 @@ std::vector<std::vector<float>>  Linear::compute(std::vector<std::vector<float>>
 		}
 	}
 
-	weights = generateWeights();
-	
 	return result;
 }
 

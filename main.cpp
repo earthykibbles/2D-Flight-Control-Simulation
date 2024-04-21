@@ -33,6 +33,7 @@ int main()
   
     float r1_ang_vel;
     float r2_ang_vel;
+    bool modela = false;
     
     for (int episodes = 0; episodes < 100; episodes++) {
         std::cout << "Episode " << episodes << " started running." << std::endl;
@@ -41,6 +42,11 @@ int main()
             std::mt19937 gen(rd());
             std::normal_distribution<float> dist(120, 2);
             std::uniform_real_distribution<float> disep(0, 1);
+            std::uniform_real_distribution<float> disreward(0, 5);
+
+            
+            // This is both the reward and the loss of the neural network
+            float reward = disreward(gen);
 
             if (disep(gen) < epsilon) {
                 r1_ang_vel = dist(gen);
@@ -48,22 +54,22 @@ int main()
             }
             else {
                 if (memory.size() > 20) {
+                    modela = true;
                     std::vector<std::vector<float>> mem_feed(memory.begin(), memory.begin() + 10);
                     r1_ang_vel = model.predict(mem_feed)[0];
                     r2_ang_vel = model.predict(mem_feed)[1];
                     mem_feed.clear();
+                    model.backward(reward);
                 }
                 else {
+                    modela = false;
                     r1_ang_vel = dist(gen);
                     r2_ang_vel = dist(gen);
                 }
             }
 
             drone.flightControl(r1_ang_vel, r2_ang_vel);
-
-            // This is both the reward and the loss of the neural network
-            float reward = env.reward(drone);
-            model.backward(reward);
+ 
 
             std::cout << env.targetPosition[0] << "\t" << drone.x << "\t" << env.targetPosition[1] <<"\t" << drone.y << std::endl;
            
@@ -88,11 +94,11 @@ int main()
             std::vector<float> state = { delta_t , drone.x , drone.y, drone.v_x, drone.v_y, drone.a_x, drone.a_y, drone.theta, drone.tau , drone.thrust };
             memory.push_back(state);
 
-            if (drone.y <= env.ymin or drone.x <= env.xmin 
+           /* if (drone.y <= env.ymin or drone.x <= env.xmin 
                 or drone.y >= env.ymax or drone.x >= env.xmax) 
             {
                 break;
-            }
+            }*/
 
             delta_t += 0.1;
             epsilon -= 0.001;

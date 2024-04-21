@@ -33,6 +33,9 @@ public:
 
 
 	float reward(Drone &drone) {
+		// Calculate Theta between Drone and Target
+		float theta = acos((drone.x * targetPosition[0] + drone.y * targetPosition[1])/ sqrt(pow(drone.x, 2)) + sqrt(pow(drone.y, 2)) * sqrt(pow(targetPosition[0], 2)) + sqrt(pow(targetPosition[1], 2)));
+			
 		float distance = abs(drone.x - targetPosition[0]) + abs(drone.y - targetPosition[1]);
 		return 1 / distance;
 	}

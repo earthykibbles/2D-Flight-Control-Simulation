@@ -47,6 +47,12 @@
     <ClInclude Include="model\sigmoid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="misc\socket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

@@ -163,6 +163,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="drone\drone.h" />
+    <ClInclude Include="misc\matrix.h" />
+    <ClInclude Include="misc\socket.h" />
     <ClInclude Include="model\linear.h" />
     <ClInclude Include="model\relu.h" />
     <ClInclude Include="model\sigmoid.h" />

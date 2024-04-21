@@ -46,18 +46,18 @@ int main()
 
             
             // This is both the reward and the loss of the neural network
-            float reward = disreward(gen);
+            float reward = env.reward(drone);
 
             if (disep(gen) < epsilon) {
                 r1_ang_vel = dist(gen);
                 r2_ang_vel = dist(gen);
             }
             else {
-                if (memory.size() > 20) {
+                if (memory.size() > 10) {
                     modela = true;
                     std::vector<std::vector<float>> mem_feed(memory.begin(), memory.begin() + 10);
-                    r1_ang_vel = model.predict(mem_feed)[0];
-                    r2_ang_vel = model.predict(mem_feed)[1];
+                    r1_ang_vel = model.predict(mem_feed)[0] * 120;
+                    r2_ang_vel = model.predict(mem_feed)[1] * 120;
                     mem_feed.clear();
                     model.backward(reward);
                 }

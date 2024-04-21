@@ -31,7 +31,7 @@ std::vector<std::vector<float>> Linear::generateWeights() {
 std::vector<float> Linear::generateBias() {
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_real_distribution<float> dis(0, 0.2);
+	std::uniform_real_distribution<float> dis(0, 1);
 
 	std::vector<float> bias_temp;
 
@@ -65,7 +65,7 @@ std::vector<std::vector<float>>  Linear::compute(std::vector<std::vector<float>>
 	for (size_t i = 0; i < inputData.size(); ++i) {
 		for (size_t j = 0; j < weights[0].size(); ++j) {
 			for (size_t k = 0; k < weights.size(); ++k) {
-				result[i][j] += inputData[i][k] * weights[k][j];
+				result[i][j] += (inputData[i][k] * weights[k][j]) + bias[j];
 			}
 		}
 	}
